@@ -478,6 +478,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .lang span { color: var(--muted); font-size: .92rem; text-align: right; }
 .lang em { display: block; font-style: normal; font-size: .8rem; color: var(--quiet); margin-top: .15rem; }
 .edu-side h3 { font-size: var(--step-2); margin-bottom: 1rem; }
+.edu-side .edu-side__sub { margin-top: 2.5rem; }
 @media (max-width: 900px) { .edu-grid { grid-template-columns: 1fr; } }
 @media (max-width: 480px) { .edu { grid-template-columns: 1fr; gap: .25rem; } }
 
