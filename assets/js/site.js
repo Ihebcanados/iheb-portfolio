@@ -409,26 +409,184 @@
     document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
   }
 
-  // Lightbox for app screenshots.
+  // Photo wall: series filters and the collapsed "show all" state.
+  const grid = document.getElementById('photo-grid');
+  if (grid) {
+    const photos = Array.from(grid.querySelectorAll('.photo'));
+    const btns = Array.from(document.querySelectorAll('[data-series-filter]'));
+    // The height limit sits on a wrapper: on the column list itself it would spill into extra columns.
+    const view = document.getElementById('photo-viewport');
+    const more = document.getElementById('photo-more');
+    const moreWrap = more.parentElement;
+    const wall = view.closest('.photo-wall');
+    let open = false;
+    // Collapse or expand the wall. The toggle only shows when the photos are taller than the collapsed height.
+    const syncMore = () => {
+      const limit = parseFloat(getComputedStyle(view).getPropertyValue('--collapsed-h')) || 720;
+      const tall = grid.offsetHeight > limit + 40;
+      view.classList.toggle('is-collapsed', tall && !open);
+      wall.classList.toggle('is-open', tall && open);
+      moreWrap.hidden = !tall;
+      const n = photos.filter((p) => !p.hidden).length;
+      more.textContent = open ? 'Show less' : `Show all ${n} photographs`;
+      more.setAttribute('aria-expanded', String(open));
+    };
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.seriesFilter;
+        btns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        photos.forEach((p) => { p.hidden = f !== 'all' && p.dataset.series !== f; });
+        open = false;
+        syncMore();
+      });
+    });
+    more.addEventListener('click', () => {
+      open = !open;
+      syncMore();
+      // After collapsing, bring the top of the gallery back into view instead of leaving the reader far below it.
+      if (!open) wall.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+    syncMore();
+    window.addEventListener('load', syncMore);
+    window.addEventListener('resize', syncMore);
+  }
+
+  // Lightbox for app screenshots and photographs. Items inside a [data-shot-group] can be stepped through.
   const box = document.getElementById('lightbox');
   if (box) {
     const img = box.querySelector('img');
     const cap = box.querySelector('.lightbox__cap');
     const closeBtn = box.querySelector('.lightbox__close');
+    const prevBtn = box.querySelector('.lightbox__nav--prev');
+    const nextBtn = box.querySelector('.lightbox__nav--next');
     let opener = null;
+    let group = [];
+    let index = 0;
+    const show = (btn) => {
+      const thumb = btn.querySelector('img');
+      img.src = btn.dataset.photo || thumb.src; img.alt = thumb.alt;
+      const pos = group.length > 1 ? `${String(index + 1).padStart(2, '0')} / ${String(group.length).padStart(2, '0')}  ·  ` : '';
+      cap.textContent = pos + btn.dataset.shot;
+    };
+    const step = (d) => {
+      if (group.length < 2) return;
+      index = (index + d + group.length) % group.length;
+      opener = group[index];
+      show(opener);
+    };
     const close = () => { box.hidden = true; document.body.style.overflow = ''; if (opener) opener.focus(); };
     document.querySelectorAll('[data-shot]').forEach((btn) => {
       btn.addEventListener('click', () => {
         opener = btn;
-        const thumb = btn.querySelector('img');
-        img.src = thumb.src; img.alt = thumb.alt;
-        cap.textContent = btn.dataset.shot;
+        const g = btn.closest('[data-shot-group]');
+        // Step only through what is currently visible (respects the active filter).
+        group = g ? Array.from(g.querySelectorAll('[data-shot]')).filter((b) => !b.closest('[hidden]')) : [btn];
+        index = Math.max(0, group.indexOf(btn));
+        if (prevBtn) { prevBtn.hidden = nextBtn.hidden = group.length < 2; }
+        show(btn);
         box.hidden = false; document.body.style.overflow = 'hidden';
         closeBtn.focus();
       });
     });
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => step(-1));
+      nextBtn.addEventListener('click', () => step(1));
+    }
     closeBtn.addEventListener('click', close);
     box.addEventListener('click', (e) => { if (e.target === box) close(); });
-    box.addEventListener('keydown', (e) => { if (e.key === 'Escape' || e.key === 'Tab') { e.preventDefault(); if (e.key === 'Escape') close(); } });
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); return; }
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); return; }
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key === 'Tab') {
+        // Keep focus inside the dialog.
+        const f = [closeBtn, prevBtn, nextBtn].filter((b) => b && !b.hidden);
+        const i = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+      }
+    });
+    // Swipe between photos on touch screens.
+    let x0 = null;
+    box.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+      x0 = null;
+    });
+  }
+
+  /* ---------- Ambient side life ---------- */
+  // Random camera and code glyphs drift up the side margins, and focus boxes lock on now and then.
+  const amb = document.getElementById('ambient');
+  if (amb && !reduce) {
+    const rand = (a, b) => a + Math.random() * (b - a);
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const TEXT = ['</>', '{ }', '=>', 'f/1.8', 'ISO 400', '1/250s', '24 fps', '4K RAW', 'AF-C', 'npm run dev', 'git push', '200 OK', '[ REC ]', 'const', 'async', '+', '×', 'ƒ', '35mm', 'ATEM', 'λ', '0x1F', 'TC 01:00:00:00'];
+    const COLORS = ['var(--quiet)', 'var(--quiet)', 'var(--muted)', 'var(--cyan)', 'var(--signal-ink)'];
+    const CONTENT = 1200;
+
+    // Where the free side space is. Wide screens use the real margins; narrow ones hug the outer edge, sparser and fainter.
+    const lane = () => {
+      const w = window.innerWidth;
+      const side = (w - CONTENT) / 2;
+      const left = Math.random() < 0.5;
+      if (side >= 90) {
+        const x = rand(44, side - 36);
+        return { x: left ? x : w - x, faint: false };
+      }
+      const x = rand(4, Math.max(10, w * 0.05));
+      return { x: left ? x : w - x - 20, faint: true };
+    };
+    const capacity = () => (window.innerWidth - CONTENT >= 180 ? 18 : window.innerWidth > 700 ? 7 : 4);
+
+    let live = 0;
+    const spawn = (warm) => {
+      if (document.hidden || live >= capacity()) return;
+      const { x, faint } = lane();
+      const el = document.createElement('span');
+      const roll = Math.random();
+      if (roll < 0.62) { el.className = 'glyph'; el.textContent = pick(TEXT); el.style.setProperty('--s', `${rand(0.66, 0.92).toFixed(2)}rem`); }
+      else if (roll < 0.8) { el.className = 'glyph glyph--box'; el.style.setProperty('--w', `${Math.round(rand(16, 34))}px`); }
+      else if (roll < 0.95) { el.className = 'glyph glyph--ring'; el.style.setProperty('--w', `${Math.round(rand(14, 30))}px`); }
+      else { el.className = 'glyph glyph--dot'; }
+      const d = rand(22, 42);
+      el.style.left = `${Math.round(x)}px`;
+      el.style.setProperty('--c', pick(COLORS));
+      el.style.setProperty('--d', `${d.toFixed(1)}s`);
+      el.style.setProperty('--o', (faint ? rand(0.18, 0.32) : rand(0.35, 0.7)).toFixed(2));
+      el.style.setProperty('--sway', `${Math.round(rand(-30, 30))}px`);
+      el.style.setProperty('--r', `${Math.round(rand(-120, 120))}deg`);
+      // On first load start glyphs part-way through their trip so the sides aren't empty.
+      if (warm) el.style.animationDelay = `${(-Math.random() * d * 0.8).toFixed(1)}s`;
+      el.addEventListener('animationend', () => { el.remove(); live--; }, { once: true });
+      amb.appendChild(el);
+      live++;
+    };
+    for (let i = 0; i < capacity(); i++) spawn(true);
+    setInterval(() => spawn(false), 1600);
+
+    const blip = () => {
+      if (!document.hidden) {
+        const { x } = lane();
+        const b = document.createElement('span');
+        b.className = 'blip';
+        b.style.left = `${Math.round(x - 22)}px`;
+        b.style.top = `${Math.round(rand(0.12, 0.85) * window.innerHeight)}px`;
+        b.addEventListener('animationend', () => b.remove(), { once: true });
+        amb.appendChild(b);
+      }
+      setTimeout(blip, rand(2600, 6000));
+    };
+    setTimeout(blip, 1800);
+
+    // The film strips advance as you scroll, like film through a gate.
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { amb.style.setProperty('--scroll', `${Math.round(-window.scrollY * 0.4)}px`); ticking = false; });
+    }, { passive: true });
   }
 })();

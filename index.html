@@ -62,6 +62,8 @@
     <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-chev-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
     <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></symbol>
     <symbol id="i-layout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></symbol>
@@ -76,6 +78,7 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="grain" aria-hidden="true"></div>
+<div class="ambient" id="ambient" aria-hidden="true"><div class="ambient__strip ambient__strip--l"></div><div class="ambient__strip ambient__strip--r"></div></div>
 <div class="cursor-light" aria-hidden="true"></div>
 
 <header class="site-header" id="top">
@@ -886,7 +889,7 @@
         <article class="frame reveal" data-glow>
           <svg aria-hidden="true"><use href="#i-camera"/></svg>
           <h3>Photography</h3>
-          <p>Product, event and portrait shoots, from setting up studio lighting to retouching in Lightroom and Photoshop.</p>
+          <p>Portraits, weddings, graduations, events and street photography, from setting up lighting to retouching in Lightroom and Photoshop. <a class="text-link" href="#photos">See the photographs</a></p>
           <p class="frame__where">Studio Oussama Ben Slama, since 2024</p>
         </article>
         <article class="frame reveal" data-glow>
@@ -914,13 +917,68 @@
           <p class="frame__where">Since January 2024</p>
         </article>
       </div>
-      <!--
-        GALLERY: add your own photos here when ready. Put images in /assets/img/work/
-        and uncomment the list. Use JPGs around 1200px on the long side.
-      <ul class="gallery" aria-label="Selected photographs">
-        <li><img src="/assets/img/work/example.jpg" alt="Describe the photo" loading="lazy" width="1200" height="1500"></li>
-      </ul>
-      -->
+      <!-- GALLERY:START (generated) -->
+      <div class="photo-wall reveal" id="photos">
+        <div class="photo-wall__head">
+          <div>
+            <h3>Selected photographs <span class="count">38</span></h3>
+            <p>Portraits, graduations, weddings, events and street photography. Select a photo to view it full screen.</p>
+          </div>
+          <div class="filters" role="group" aria-label="Filter photographs">
+            <button class="filter" type="button" data-series-filter="all" aria-pressed="true">All</button>
+            <button class="filter" type="button" data-series-filter="portraits" aria-pressed="false">Portraits <span>8</span></button>
+            <button class="filter" type="button" data-series-filter="graduation" aria-pressed="false">Graduation <span>7</span></button>
+            <button class="filter" type="button" data-series-filter="lifestyle" aria-pressed="false">Lifestyle <span>5</span></button>
+            <button class="filter" type="button" data-series-filter="weddings" aria-pressed="false">Weddings <span>4</span></button>
+            <button class="filter" type="button" data-series-filter="events" aria-pressed="false">Events <span>8</span></button>
+            <button class="filter" type="button" data-series-filter="street" aria-pressed="false">Street <span>6</span></button>
+          </div>
+        </div>
+        <div class="photo-viewport is-collapsed" id="photo-viewport">
+        <ul class="photo-grid" id="photo-grid" data-shot-group>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-01.webp" data-shot="Portraits · Woman in a brown hijab leaning on a wall in front of a white building, face turned to the sun" aria-label="View larger: Woman in a brown hijab leaning on a wall in front of a white building, face turned to the sun"><img src="/assets/img/photos/portraits-01.webp" alt="Woman in a brown hijab leaning on a wall in front of a white building, face turned to the sun" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>01</b>Portraits</span></button></li>
+          <li class="photo" data-series="graduation"><button type="button" data-photo="/assets/img/photos/full/graduation-01.webp" data-shot="Graduation · Graduate hiding behind a bouquet of white and pink roses" aria-label="View larger: Graduate hiding behind a bouquet of white and pink roses"><img src="/assets/img/photos/graduation-01.webp" alt="Graduate hiding behind a bouquet of white and pink roses" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>02</b>Graduation</span></button></li>
+          <li class="photo" data-series="lifestyle"><button type="button" data-photo="/assets/img/photos/full/lifestyle-01.webp" data-shot="Lifestyle · Rider on a mint Vespa by the sea, &quot;Vivi il momento!&quot; written on the front" aria-label="View larger: Rider on a mint Vespa by the sea, &quot;Vivi il momento!&quot; written on the front"><img src="/assets/img/photos/lifestyle-01.webp" alt="Rider on a mint Vespa by the sea, &quot;Vivi il momento!&quot; written on the front" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>03</b>Lifestyle</span></button></li>
+          <li class="photo" data-series="weddings"><button type="button" data-photo="/assets/img/photos/full/weddings-01.webp" data-shot="Weddings · Bride and groom holding hands at sunset beside a blue-and-white wall" aria-label="View larger: Bride and groom holding hands at sunset beside a blue-and-white wall"><img src="/assets/img/photos/weddings-01.webp" alt="Bride and groom holding hands at sunset beside a blue-and-white wall" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>04</b>Weddings</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-01.webp" data-shot="Events · DJ at the decks with guests holding up phone lights" aria-label="View larger: DJ at the decks with guests holding up phone lights"><img src="/assets/img/photos/events-01.webp" alt="DJ at the decks with guests holding up phone lights" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>05</b>Events</span></button></li>
+          <li class="photo" data-series="street"><button type="button" data-photo="/assets/img/photos/full/street-01.webp" data-shot="Street · Weathered wooden seaside house facing the sea, in black and white" aria-label="View larger: Weathered wooden seaside house facing the sea, in black and white"><img src="/assets/img/photos/street-01.webp" alt="Weathered wooden seaside house facing the sea, in black and white" loading="lazy" decoding="async" width="720" height="900"><span class="photo__tag" aria-hidden="true"><b>06</b>Street</span></button></li>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-02.webp" data-shot="Portraits · Close-up portrait in golden-hour window light" aria-label="View larger: Close-up portrait in golden-hour window light"><img src="/assets/img/photos/portraits-02.webp" alt="Close-up portrait in golden-hour window light" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>07</b>Portraits</span></button></li>
+          <li class="photo" data-series="graduation"><button type="button" data-photo="/assets/img/photos/full/graduation-02.webp" data-shot="Graduation · Green graduation stole embroidered with the faculty crest and 2026" aria-label="View larger: Green graduation stole embroidered with the faculty crest and 2026"><img src="/assets/img/photos/graduation-02.webp" alt="Green graduation stole embroidered with the faculty crest and 2026" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>08</b>Graduation</span></button></li>
+          <li class="photo" data-series="lifestyle"><button type="button" data-photo="/assets/img/photos/full/lifestyle-02.webp" data-shot="Lifestyle · Tying a red floral scarf to the scooter mirror" aria-label="View larger: Tying a red floral scarf to the scooter mirror"><img src="/assets/img/photos/lifestyle-02.webp" alt="Tying a red floral scarf to the scooter mirror" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>09</b>Lifestyle</span></button></li>
+          <li class="photo" data-series="weddings"><button type="button" data-photo="/assets/img/photos/full/weddings-02.webp" data-shot="Weddings · Bride smiling up at the groom" aria-label="View larger: Bride smiling up at the groom"><img src="/assets/img/photos/weddings-02.webp" alt="Bride smiling up at the groom" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>10</b>Weddings</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-02.webp" data-shot="Events · Dancers silhouetted under red stage light" aria-label="View larger: Dancers silhouetted under red stage light"><img src="/assets/img/photos/events-02.webp" alt="Dancers silhouetted under red stage light" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>11</b>Events</span></button></li>
+          <li class="photo" data-series="street"><button type="button" data-photo="/assets/img/photos/full/street-02.webp" data-shot="Street · Hand moving a black chess knight, in black and white" aria-label="View larger: Hand moving a black chess knight, in black and white"><img src="/assets/img/photos/street-02.webp" alt="Hand moving a black chess knight, in black and white" loading="lazy" decoding="async" width="720" height="900"><span class="photo__tag" aria-hidden="true"><b>12</b>Street</span></button></li>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-03.webp" data-shot="Portraits · Portrait looking back over her shoulder" aria-label="View larger: Portrait looking back over her shoulder"><img src="/assets/img/photos/portraits-03.webp" alt="Portrait looking back over her shoulder" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>13</b>Portraits</span></button></li>
+          <li class="photo" data-series="graduation"><button type="button" data-photo="/assets/img/photos/full/graduation-03.webp" data-shot="Graduation · Graduate raising a green mortarboard embroidered with a tooth and &quot;Dentiste&quot;" aria-label="View larger: Graduate raising a green mortarboard embroidered with a tooth and &quot;Dentiste&quot;"><img src="/assets/img/photos/graduation-03.webp" alt="Graduate raising a green mortarboard embroidered with a tooth and &quot;Dentiste&quot;" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>14</b>Graduation</span></button></li>
+          <li class="photo" data-series="lifestyle"><button type="button" data-photo="/assets/img/photos/full/lifestyle-03.webp" data-shot="Lifestyle · Hands with a gold ring and bangles resting on a phone, mint scooter behind" aria-label="View larger: Hands with a gold ring and bangles resting on a phone, mint scooter behind"><img src="/assets/img/photos/lifestyle-03.webp" alt="Hands with a gold ring and bangles resting on a phone, mint scooter behind" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>15</b>Lifestyle</span></button></li>
+          <li class="photo" data-series="weddings"><button type="button" data-photo="/assets/img/photos/full/weddings-03.webp" data-shot="Weddings · Couple looking down at the bridal bouquet" aria-label="View larger: Couple looking down at the bridal bouquet"><img src="/assets/img/photos/weddings-03.webp" alt="Couple looking down at the bridal bouquet" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>16</b>Weddings</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-03.webp" data-shot="Events · Guests filming the DJ between two lighting trusses" aria-label="View larger: Guests filming the DJ between two lighting trusses"><img src="/assets/img/photos/events-03.webp" alt="Guests filming the DJ between two lighting trusses" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>17</b>Events</span></button></li>
+          <li class="photo" data-series="street"><button type="button" data-photo="/assets/img/photos/full/street-03.webp" data-shot="Street · Two figures wading through shallow water at dusk, in black and white" aria-label="View larger: Two figures wading through shallow water at dusk, in black and white"><img src="/assets/img/photos/street-03.webp" alt="Two figures wading through shallow water at dusk, in black and white" loading="lazy" decoding="async" width="720" height="720"><span class="photo__tag" aria-hidden="true"><b>18</b>Street</span></button></li>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-04.webp" data-shot="Portraits · Portrait holding a pink hibiscus flower to her face" aria-label="View larger: Portrait holding a pink hibiscus flower to her face"><img src="/assets/img/photos/portraits-04.webp" alt="Portrait holding a pink hibiscus flower to her face" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>19</b>Portraits</span></button></li>
+          <li class="photo" data-series="graduation"><button type="button" data-photo="/assets/img/photos/full/graduation-04.webp" data-shot="Graduation · Graduate adjusting her mortarboard, seen from behind" aria-label="View larger: Graduate adjusting her mortarboard, seen from behind"><img src="/assets/img/photos/graduation-04.webp" alt="Graduate adjusting her mortarboard, seen from behind" loading="lazy" decoding="async" width="720" height="954"><span class="photo__tag" aria-hidden="true"><b>20</b>Graduation</span></button></li>
+          <li class="photo" data-series="lifestyle"><button type="button" data-photo="/assets/img/photos/full/lifestyle-04.webp" data-shot="Lifestyle · Hand on the brake lever, crochet skirt and a mint net bag" aria-label="View larger: Hand on the brake lever, crochet skirt and a mint net bag"><img src="/assets/img/photos/lifestyle-04.webp" alt="Hand on the brake lever, crochet skirt and a mint net bag" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>21</b>Lifestyle</span></button></li>
+          <li class="photo" data-series="weddings"><button type="button" data-photo="/assets/img/photos/full/weddings-04.webp" data-shot="Weddings · Bride kissing the groom on the cheek in golden backlight" aria-label="View larger: Bride kissing the groom on the cheek in golden backlight"><img src="/assets/img/photos/weddings-04.webp" alt="Bride kissing the groom on the cheek in golden backlight" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>22</b>Weddings</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-04.webp" data-shot="Events · Dance floor washed in green light" aria-label="View larger: Dance floor washed in green light"><img src="/assets/img/photos/events-04.webp" alt="Dance floor washed in green light" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>23</b>Events</span></button></li>
+          <li class="photo" data-series="street"><button type="button" data-photo="/assets/img/photos/full/street-04.webp" data-shot="Street · Man in a wheelchair and his long shadow on the road, in black and white" aria-label="View larger: Man in a wheelchair and his long shadow on the road, in black and white"><img src="/assets/img/photos/street-04.webp" alt="Man in a wheelchair and his long shadow on the road, in black and white" loading="lazy" decoding="async" width="720" height="540"><span class="photo__tag" aria-hidden="true"><b>24</b>Street</span></button></li>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-05.webp" data-shot="Portraits · Posing against a low wall in front of a white house with blue shutters" aria-label="View larger: Posing against a low wall in front of a white house with blue shutters"><img src="/assets/img/photos/portraits-05.webp" alt="Posing against a low wall in front of a white house with blue shutters" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>25</b>Portraits</span></button></li>
+          <li class="photo" data-series="graduation"><button type="button" data-photo="/assets/img/photos/full/graduation-05.webp" data-shot="Graduation · Graduate seen from behind on a garden path, raising her cap" aria-label="View larger: Graduate seen from behind on a garden path, raising her cap"><img src="/assets/img/photos/graduation-05.webp" alt="Graduate seen from behind on a garden path, raising her cap" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>26</b>Graduation</span></button></li>
+          <li class="photo" data-series="lifestyle"><button type="button" data-photo="/assets/img/photos/full/lifestyle-05.webp" data-shot="Lifestyle · Overhead shot of a hand with gold bangles holding a phone above the scooter" aria-label="View larger: Overhead shot of a hand with gold bangles holding a phone above the scooter"><img src="/assets/img/photos/lifestyle-05.webp" alt="Overhead shot of a hand with gold bangles holding a phone above the scooter" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>27</b>Lifestyle</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-05.webp" data-shot="Events · Crowd cheering behind the DJ booth" aria-label="View larger: Crowd cheering behind the DJ booth"><img src="/assets/img/photos/events-05.webp" alt="Crowd cheering behind the DJ booth" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>28</b>Events</span></button></li>
+          <li class="photo" data-series="street"><button type="button" data-photo="/assets/img/photos/full/street-05.webp" data-shot="Street · Fishing boat seen through palm fronds, in black and white" aria-label="View larger: Fishing boat seen through palm fronds, in black and white"><img src="/assets/img/photos/street-05.webp" alt="Fishing boat seen through palm fronds, in black and white" loading="lazy" decoding="async" width="720" height="720"><span class="photo__tag" aria-hidden="true"><b>29</b>Street</span></button></li>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-06.webp" data-shot="Portraits · Standing on the deck of a wooden boat in the harbour" aria-label="View larger: Standing on the deck of a wooden boat in the harbour"><img src="/assets/img/photos/portraits-06.webp" alt="Standing on the deck of a wooden boat in the harbour" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>30</b>Portraits</span></button></li>
+          <li class="photo" data-series="graduation"><button type="button" data-photo="/assets/img/photos/full/graduation-06.webp" data-shot="Graduation · Reading the physician's oath" aria-label="View larger: Reading the physician's oath"><img src="/assets/img/photos/graduation-06.webp" alt="Reading the physician's oath" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>31</b>Graduation</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-06.webp" data-shot="Events · Dancers in blue light with long shadows across the floor" aria-label="View larger: Dancers in blue light with long shadows across the floor"><img src="/assets/img/photos/events-06.webp" alt="Dancers in blue light with long shadows across the floor" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>32</b>Events</span></button></li>
+          <li class="photo" data-series="street"><button type="button" data-photo="/assets/img/photos/full/street-06.webp" data-shot="Street · Hooded figure facing a hazy sea between two guardrails, in black and white" aria-label="View larger: Hooded figure facing a hazy sea between two guardrails, in black and white"><img src="/assets/img/photos/street-06.webp" alt="Hooded figure facing a hazy sea between two guardrails, in black and white" loading="lazy" decoding="async" width="720" height="900"><span class="photo__tag" aria-hidden="true"><b>33</b>Street</span></button></li>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-07.webp" data-shot="Portraits · Close-up of hands fastening a wristwatch" aria-label="View larger: Close-up of hands fastening a wristwatch"><img src="/assets/img/photos/portraits-07.webp" alt="Close-up of hands fastening a wristwatch" loading="lazy" decoding="async" width="720" height="960"><span class="photo__tag" aria-hidden="true"><b>34</b>Portraits</span></button></li>
+          <li class="photo" data-series="graduation"><button type="button" data-photo="/assets/img/photos/full/graduation-07.webp" data-shot="Graduation · Holding the mortarboard out towards the camera" aria-label="View larger: Holding the mortarboard out towards the camera"><img src="/assets/img/photos/graduation-07.webp" alt="Holding the mortarboard out towards the camera" loading="lazy" decoding="async" width="720" height="954"><span class="photo__tag" aria-hidden="true"><b>35</b>Graduation</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-07.webp" data-shot="Events · DJ in warm amber light, guests raising their phones" aria-label="View larger: DJ in warm amber light, guests raising their phones"><img src="/assets/img/photos/events-07.webp" alt="DJ in warm amber light, guests raising their phones" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>36</b>Events</span></button></li>
+          <li class="photo" data-series="portraits"><button type="button" data-photo="/assets/img/photos/full/portraits-08.webp" data-shot="Portraits · Portrait in warm light with wrought-iron shadows across the wall" aria-label="View larger: Portrait in warm light with wrought-iron shadows across the wall"><img src="/assets/img/photos/portraits-08.webp" alt="Portrait in warm light with wrought-iron shadows across the wall" loading="lazy" decoding="async" width="720" height="958"><span class="photo__tag" aria-hidden="true"><b>37</b>Portraits</span></button></li>
+          <li class="photo" data-series="events"><button type="button" data-photo="/assets/img/photos/full/events-08.webp" data-shot="Events · Green-lit dance floor seen from the back of the room" aria-label="View larger: Green-lit dance floor seen from the back of the room"><img src="/assets/img/photos/events-08.webp" alt="Green-lit dance floor seen from the back of the room" loading="lazy" decoding="async" width="720" height="450"><span class="photo__tag" aria-hidden="true"><b>38</b>Events</span></button></li>
+        </ul>
+        </div>
+        <div class="photo-wall__more"><button class="btn" type="button" id="photo-more" aria-controls="photo-viewport" aria-expanded="false">Show all photographs</button></div>
+      </div>
+      <!-- GALLERY:END -->
     </div>
   </section>
 
@@ -930,6 +988,8 @@
       <div>
         <h2 class="contact__title" id="contact-title">Let's make something.</h2>
         <p class="contact__lede">Write to me about software roles, freelance mobile or web projects, photo and video work, or academic collaboration.</p>
+      </div>
+      <div class="reveal">
         <ul class="channels">
           <li>
             <div class="channel">
@@ -944,41 +1004,6 @@
           <li><div class="channel"><svg aria-hidden="true"><use href="#i-pin"/></svg><span><span class="channel__label">Based in</span><br><span class="channel__value">Mahdia, Tunisia</span></span><span></span></div></li>
         </ul>
       </div>
-
-      <form class="form reveal" data-glow id="contact-form" action="/api/contact" method="post" novalidate>
-        <div class="form__row">
-          <div class="field">
-            <label for="f-name">Name</label>
-            <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="e-name">
-            <span class="field__error" id="e-name"></span>
-          </div>
-          <div class="field">
-            <label for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200" aria-describedby="e-email">
-            <span class="field__error" id="e-email"></span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="f-subject">Subject</label>
-          <input id="f-subject" name="subject" type="text" required maxlength="150" aria-describedby="e-subject" placeholder="A project, a role, a question">
-          <span class="field__error" id="e-subject"></span>
-        </div>
-        <div class="field">
-          <label for="f-message">Message</label>
-          <textarea id="f-message" name="message" required minlength="10" maxlength="5000" aria-describedby="e-message"></textarea>
-          <span class="field__error" id="e-message"></span>
-        </div>
-        <div class="hp" aria-hidden="true">
-          <label for="f-website">Leave this field empty</label>
-          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
-        </div>
-        <input type="hidden" name="startedAt" id="f-started">
-        <div class="form__foot">
-          <p class="form__note">Your message goes straight to my inbox. I don't store it anywhere else.</p>
-          <button class="btn btn--primary" type="submit" id="f-submit">Send message</button>
-        </div>
-        <div class="form__status" id="form-status" role="status" aria-live="polite"></div>
-      </form>
     </div>
   </section>
 </main>
@@ -1003,6 +1028,13 @@
   </div>
 </footer>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph" hidden>
+  <img src="" alt="">
+  <button class="lightbox__close" type="button" aria-label="Close photograph"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+  <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Previous photograph" hidden><svg aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+  <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Next photograph" hidden><svg aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+  <p class="lightbox__cap"></p>
+</div>
 <script src="/assets/js/site.js" defer></script>
 </body>
 </html>

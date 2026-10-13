@@ -2,7 +2,7 @@
 
 Personal portfolio of Iheb Ichi: software engineer and creative technologist, Mahdia, Tunisia.
 
-A fast, dependency-free static site (HTML, CSS, vanilla JavaScript) with one serverless function for the contact form. No build step.
+A fast, dependency-free static site (HTML, CSS, vanilla JavaScript). No build step.
 
 ## Structure
 
@@ -30,7 +30,6 @@ node scripts/dev-server.mjs
 # open http://localhost:3000
 ```
 
-Without an email key, the contact form tells the visitor it couldn't send and offers a pre-filled email instead. It never shows "sent" unless the message was delivered.
 
 ## Deploy (Vercel)
 
@@ -42,20 +41,9 @@ Without an email key, the contact form tells the visitor it couldn't send and of
    node scripts/set-site-url.mjs https://your-domain.com
    ```
 
-## Turn on the contact form
+## Contact
 
-1. Create a free account at [resend.com](https://resend.com) and create an API key.
-2. In Vercel: **Project → Settings → Environment Variables**:
-   | Name | Value |
-   |---|---|
-   | `RESEND_API_KEY` | your Resend key (required) |
-   | `CONTACT_TO_EMAIL` | where to receive messages (default `iheb6410@gmail.com`) |
-   | `CONTACT_FROM_EMAIL` | a sender on a domain you verified in Resend, e.g. `Portfolio <hello@your-domain.com>` |
-3. Redeploy.
-
-Until you verify your own domain in Resend, leave `CONTACT_FROM_EMAIL` unset: Resend's test sender only delivers to the email address that owns the Resend account, so sign up with `iheb6410@gmail.com`.
-
-Spam protection: a hidden honeypot field, a minimum fill time, and a per-IP rate limit. Replies go straight to the sender because `reply_to` is set to their address.
+The contact section lists email, phone, LinkedIn, GitHub and location only. There is no form, so no email service or API key is needed. `api/contact.js` is no longer used by the page.
 
 ## Editing content
 

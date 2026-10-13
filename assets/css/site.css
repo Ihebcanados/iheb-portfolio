@@ -498,8 +498,71 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .frame h3 { font-size: var(--step-2); margin-bottom: .6rem; }
 .frame p { color: var(--muted); font-size: .95rem; }
 .frame__where { margin-top: auto; padding-top: 1rem; font-size: .84rem; color: var(--quiet); border-top: 1px solid var(--line); }
-.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; list-style: none; }
-.gallery img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--radius-m); }@media (max-width: 1100px) { .frames { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Photo wall: a masonry contact sheet under the frames */
+.photo-wall { margin-top: clamp(3rem, 2rem + 3vw, 5rem); }
+.photo-wall__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; align-items: end; margin-bottom: 1.5rem; }
+.photo-wall__head h3 { font-size: var(--step-2); }
+.photo-wall__head p { color: var(--muted); font-size: .95rem; margin-top: .4rem; max-width: 52ch; }
+.filter span { font-family: var(--font-mono); font-size: .75em; opacity: .6; margin-left: .15rem; }
+.photo-grid { list-style: none; columns: 4 220px; column-gap: 1rem; }
+.photo-viewport { --collapsed-h: 720px; }
+.photo-viewport.is-collapsed {
+  max-height: var(--collapsed-h); overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 72%, transparent); mask-image: linear-gradient(#000 72%, transparent);
+}
+.photo { break-inside: avoid; margin-bottom: 1rem; }
+.photo[hidden] { display: none; }
+.photo button {
+  all: unset; position: relative; display: block; cursor: zoom-in; overflow: hidden; isolation: isolate;
+  border-radius: var(--radius-m); background: var(--graphite-2); border: 1px solid var(--line);
+}
+.photo button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.photo img { display: block; width: 100%; height: auto; transition: transform .7s var(--ease), filter .5s var(--ease); }
+/* viewfinder corner marks */
+.photo button::before {
+  content: ""; position: absolute; inset: 12px; z-index: 2; pointer-events: none; opacity: 0; transform: scale(1.06);
+  transition: opacity .3s var(--ease), transform .45s var(--ease);
+  --c: rgba(255,255,255,.9);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 18px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) top left / 1.5px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 18px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 1.5px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 18px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 1.5px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 18px 1.5px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 1.5px 18px no-repeat;
+}
+/* scrim so the frame number stays readable */
+.photo button::after {
+  content: ""; position: absolute; inset: 50% 0 0; z-index: 1; pointer-events: none; opacity: 0;
+  background: linear-gradient(transparent, rgba(5, 7, 12, .75)); transition: opacity .3s var(--ease);
+}
+.photo__tag {
+  position: absolute; left: 22px; bottom: 20px; z-index: 3; display: flex; gap: .55rem; align-items: baseline;
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.92);
+  opacity: 0; transform: translateY(6px); transition: opacity .3s var(--ease), transform .35s var(--ease);
+}
+.photo__tag b { color: var(--rec); font-weight: 500; }
+.photo button:is(:hover, :focus-visible) img { transform: scale(1.045); }
+.photo button:is(:hover, :focus-visible)::before { opacity: 1; transform: none; }
+.photo button:is(:hover, :focus-visible)::after,
+.photo button:is(:hover, :focus-visible) .photo__tag { opacity: 1; transform: none; }
+/* while hovering one photo, the rest of the wall dims slightly */
+@media (hover: hover) {
+  .photo-grid:has(button:hover) .photo button:not(:hover) img { filter: brightness(.6) saturate(.8); }
+}
+@media (hover: none) { .photo button::after, .photo__tag { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .photo img, .photo button::before, .photo__tag { transition: none; } .photo button:is(:hover, :focus-visible) img { transform: none; } }
+.photo-wall__more { display: flex; justify-content: center; margin-top: 1rem; }
+.photo-wall__more[hidden] { display: none; }
+.photo-wall__more .btn { background: var(--graphite-2); box-shadow: 0 10px 30px -10px rgba(0,0,0,.8); }
+/* While the wall is open, "Show less" rides along the bottom of the screen so it can be closed from anywhere. */
+.photo-wall.is-open .photo-wall__more { position: sticky; bottom: 1.25rem; z-index: 5; }
+@media (max-width: 600px) { .photo-grid { columns: 2; column-gap: .6rem; } .photo { margin-bottom: .6rem; } .photo-viewport { --collapsed-h: 620px; } }
+
+@media (max-width: 1100px) { .frames { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .frames { grid-template-columns: minmax(0, 1fr); } .frame { min-height: 0; } }
 
 /* ---------- Contact ---------- */
@@ -769,6 +832,13 @@ main, .site-footer { position: relative; z-index: 2; }
 .lightbox img { max-height: 88svh; max-width: 92vw; width: auto; border-radius: 18px; box-shadow: 0 0 60px -10px rgba(74,107,255,.5); }
 .lightbox__close { position: absolute; top: 1rem; right: 1rem; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--graphite-2); color: var(--paper); cursor: pointer; display: grid; place-items: center; }
 .lightbox__close svg { width: 20px; height: 20px; }
+.lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-strong); background: rgba(15,17,21,.75); color: var(--paper); cursor: pointer; display: grid; place-items: center; }
+.lightbox__nav[hidden] { display: none; }
+.lightbox__nav:hover { border-color: var(--muted); }
+.lightbox__nav svg { width: 22px; height: 22px; }
+.lightbox__nav--prev { left: 1rem; }
+.lightbox__nav--next { right: 1rem; }
+@media (max-width: 600px) { .lightbox__nav { top: auto; bottom: 3.5rem; transform: none; } }
 .lightbox__cap { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; text-align: center; color: var(--muted); font-size: .9rem; }
 
 /* Flagship: real app screens over the brand gradient */
@@ -783,3 +853,52 @@ main, .site-footer { position: relative; z-index: 2; }
 }
 .shot { margin: 0; }
 .shot button { width: 100%; }
+
+/* ==========================================================================
+   Ambient side life: film strips, drifting camera/code glyphs, focus blips.
+   Lives behind the content (main is z-index 2), mostly in the side margins.
+   ========================================================================== */
+.ambient { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.ambient__strip {
+  position: absolute; top: 0; bottom: 0; width: 14px; opacity: .55;
+  border-inline: 1px solid var(--line);
+  background: repeating-linear-gradient(180deg, transparent 0 9px, var(--line-strong) 9px 17px) center / 6px 100% no-repeat;
+  background-position-y: var(--scroll, 0px);
+  -webkit-mask-image: linear-gradient(transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(transparent, #000 15%, #000 85%, transparent);
+}
+.ambient__strip--l { left: 18px; }
+.ambient__strip--r { right: 18px; }
+.glyph {
+  position: absolute; bottom: -60px; font-family: var(--font-mono); font-size: var(--s, .78rem); letter-spacing: .06em;
+  color: var(--c, var(--quiet)); white-space: nowrap; opacity: 0; will-change: transform, opacity;
+  animation: drift var(--d, 26s) linear forwards;
+}
+.glyph--box { width: var(--w, 26px); aspect-ratio: 1; border: 1.5px solid var(--c, var(--quiet)); border-radius: 3px; }
+.glyph--ring { width: var(--w, 22px); aspect-ratio: 1; border: 1.5px dashed var(--c, var(--quiet)); border-radius: 50%; }
+.glyph--dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 10px rgba(255,75,62,.7); }
+@keyframes drift {
+  0%   { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg); }
+  10%  { opacity: var(--o, .55); }
+  50%  { transform: translate3d(var(--sway, 14px), -55vh, 0) rotate(calc(var(--r, 40deg) / 2)); }
+  88%  { opacity: var(--o, .55); }
+  100% { opacity: 0; transform: translate3d(calc(var(--sway, 14px) * -0.6), calc(-100vh - 120px), 0) rotate(var(--r, 40deg)); }
+}
+/* A focus box that hunts, locks green, then lets go */
+.blip { position: absolute; width: 44px; aspect-ratio: 1; animation: blip 2.6s var(--ease) forwards; }
+.blip::before, .blip::after { content: ""; position: absolute; inset: 0; border-radius: 4px; }
+.blip::before {
+  --k: rgba(255,255,255,.85);
+  background:
+    linear-gradient(var(--k), var(--k)) top left / 10px 1.5px no-repeat, linear-gradient(var(--k), var(--k)) top left / 1.5px 10px no-repeat,
+    linear-gradient(var(--k), var(--k)) top right / 10px 1.5px no-repeat, linear-gradient(var(--k), var(--k)) top right / 1.5px 10px no-repeat,
+    linear-gradient(var(--k), var(--k)) bottom left / 10px 1.5px no-repeat, linear-gradient(var(--k), var(--k)) bottom left / 1.5px 10px no-repeat,
+    linear-gradient(var(--k), var(--k)) bottom right / 10px 1.5px no-repeat, linear-gradient(var(--k), var(--k)) bottom right / 1.5px 10px no-repeat;
+  animation: blip-lock 2.6s linear forwards;
+}
+.blip::after { border: 1px solid #5df29a; opacity: 0; animation: blip-ring 2.6s var(--ease) forwards; }
+@keyframes blip { 0% { opacity: 0; transform: scale(1.7); } 18% { opacity: 1; transform: scale(1.1); } 30% { transform: scale(1.25); } 42% { transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: scale(.94); } }
+@keyframes blip-lock { 0%, 40% { --k: rgba(255,255,255,.85); } 41%, 100% { --k: #5df29a; } }
+@keyframes blip-ring { 0%, 40% { opacity: 0; transform: scale(1); } 46% { opacity: .9; } 100% { opacity: 0; transform: scale(1.9); } }
+@media (max-width: 1100px) { .ambient__strip { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ambient { display: none; } }
+@media print { .ambient { display: none; } }
