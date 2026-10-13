@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sawarny case study — Iheb Ichi</title>
+  <meta name="description" content="Sawarny: an intelligent mobile app for booking photographers, with AI integration. React Native, Node.js, MongoDB, AWS Rekognition and Replicate. Graduation project by Iheb Ichi.">
+  <meta name="theme-color" content="#0f1115">
+  <link rel="canonical" href="https://ihebichi.me/projects/sawarny/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Iheb Ichi">
+  <meta property="og:title" content="Sawarny — an intelligent app for booking photographers">
+  <meta property="og:description" content="Case study: mobile app, API, admin dashboard and AI features, built as a graduation project.">
+  <meta property="og:image" content="https://ihebichi.me/assets/img/og-sawarny.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://ihebichi.me/projects/sawarny/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://ihebichi.me/assets/img/og-sawarny.png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/bricolage.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/assets/fonts/geist.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .d-box { fill: var(--graphite-3); stroke: var(--line-strong); }
+    .d-box--api { fill: #17204a; stroke: var(--signal); }
+    .d-box--ext { fill: var(--graphite); stroke: var(--line-strong); stroke-dasharray: 4 3; }
+    .d-title { fill: var(--paper); font: 600 15px var(--font-body); }
+    .d-sub { fill: var(--muted); font: 400 12px var(--font-body); }
+    .d-group { fill: var(--quiet); font: 500 12px var(--font-body); }
+    .d-line { stroke: var(--line-strong); stroke-width: 1.5; fill: none; }
+    .d-line--live { stroke: var(--cyan); stroke-dasharray: 5 4; }
+    .d-arrow { fill: var(--line-strong); }
+  </style>
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-mark" viewBox="0 0 64 64"><defs><linearGradient id="mk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a5bff"/><stop offset="1" stop-color="#22c7ff"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#mk)"/><g fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"><path d="M14 22v-8h8M42 14h8v8M50 42v8h-8M22 50h-8v-8"/></g><g fill="#fff"><rect x="23" y="22" width="6" height="20" rx="1.5"/><rect x="35" y="22" width="6" height="20" rx="1.5"/></g></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></symbol>
+    <symbol id="i-sign" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M13.378 15.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></symbol>
+    <symbol id="i-live" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-light" aria-hidden="true"></div>
+
+<header class="site-header" id="top">
+  <nav class="nav wrap" aria-label="Main">
+    <a class="wordmark" href="/" aria-label="Iheb Ichi, home"><svg class="wordmark__mark" aria-hidden="true" viewBox="0 0 64 64"><use href="#i-mark"/></svg>Iheb Ichi</a>
+    <ul class="nav__links">
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#work" aria-current="true">Projects</a></li>
+      <li><a href="/#skills">Skills</a></li>
+      <li><a href="/#experience">Experience</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <a class="btn btn--small" href="/cv/Iheb-Ichi-CV.pdf" download="Iheb-Ichi-CV.pdf" style="display:inline-flex"><svg aria-hidden="true"><use href="#i-download"/></svg>CV</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="cs-hero">
+    <div class="wrap">
+      <a class="crumb" href="/#work"><svg aria-hidden="true"><use href="#i-back"/></svg>All projects</a>
+      <h1>Sawarny: booking photographers, with AI built in.</h1>
+      <p class="cs-hero__sub">An intelligent mobile application for photographer booking with AI integration. Clients find and book photographers, videographers and studios; both sides sign a contract in the app; and after the event every guest can find the photos they appear in with a selfie.</p>
+      <dl class="cs-meta">
+        <div><dt>Context</dt><dd>Graduation project, ISI Mahdia</dd></div>
+        <div><dt>Timeline</dt><dd>2025–2026</dd></div>
+        <div><dt>My role</dt><dd>Product design, mobile, API and admin</dd></div>
+        <div><dt>Platforms</dt><dd>Android and iOS (Expo), web admin</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-problem">
+    <div class="wrap cs-grid">
+      <h2 id="cs-problem">The problem</h2>
+      <div class="cs-body">
+        <p>Hiring a photographer for a wedding, an event or a product shoot is often scattered across social media messages, verbal agreements and photos shared after the event in bulk. Clients struggle to compare creatives, terms are rarely written down, and guests at an event never easily get the photos they're in.</p>
+        <p><strong>Sawarny puts the whole job in one app:</strong> discovery, booking, a signed agreement, live delivery during the event, and personal photo retrieval afterwards.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-users">
+    <div class="wrap cs-grid">
+      <h2 id="cs-users">Who it's for</h2>
+      <div class="cs-body">
+        <p>Accounts are split at sign-up so each type of user gets the right profile and tools.</p>
+        <ul class="users">
+          <li><strong>Clients</strong><span>Browse portfolios, send booking requests, negotiate the details and sign the contract.</span></li>
+          <li><strong>Photographers and videographers</strong><span>Publish work, receive and adjust booking requests, run live sessions.</span></li>
+          <li><strong>Hybrid creators</strong><span>Professionals who offer both photo and video under one profile.</span></li>
+          <li><strong>Studios</strong><span>Businesses that sign up under a studio name instead of a personal one.</span></li>
+          <li><strong>Administrators</strong><span>Moderate content, handle reports and support, and configure the AI services from a web dashboard.</span></li>
+          <li><strong>Event guests</strong><span>Join a live session with an access code and retrieve their own photos.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-role">
+    <div class="wrap cs-grid">
+      <h2 id="cs-role">My contribution</h2>
+      <div class="cs-body">
+        <p>I designed the interface in Figma and built the three parts of the product: the React Native mobile app, the Node.js and Express API, and the React admin dashboard. I also integrated the external services (AWS, Cloudinary, Replicate) and set up the Docker Compose deployment.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-arch">
+    <div class="wrap cs-grid">
+      <h2 id="cs-arch">Architecture</h2>
+      <div class="cs-body" style="max-width:none">
+        <p>Two clients talk to a single Express API. MongoDB holds the application data; media and AI work is delegated to managed services. Real-time events (session updates, new photos, deletions) travel over Socket.io rooms per user and per session.</p>
+        <figure class="diagram">
+          <svg viewBox="0 0 960 430" role="img" aria-labelledby="arch-title arch-desc">
+            <title id="arch-title">Sawarny system architecture</title>
+            <desc id="arch-desc">A React Native mobile app and a React admin dashboard call an Express API over REST and Socket.io, served behind nginx with Docker Compose. The API stores data in MongoDB and uses AWS S3 for session photos, AWS Rekognition for face search, Cloudinary for posts and profile media, Replicate for the AI assistant and image generation, and Nodemailer for email codes.</desc>
+            <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="d-arrow"/></marker></defs>
+
+            <text x="20" y="28" class="d-group">Clients</text>
+            <rect x="20" y="44" width="220" height="92" rx="10" class="d-box"/>
+            <text x="38" y="78" class="d-title">Mobile app</text>
+            <text x="38" y="100" class="d-sub">React Native + Expo</text>
+            <text x="38" y="118" class="d-sub">40 screens, Zustand, React Query</text>
+
+            <rect x="20" y="166" width="220" height="92" rx="10" class="d-box"/>
+            <text x="38" y="200" class="d-title">Admin dashboard</text>
+            <text x="38" y="222" class="d-sub">React + Vite + Ant Design</text>
+            <text x="38" y="240" class="d-sub">Recharts, Leaflet maps</text>
+
+            <text x="330" y="28" class="d-group">Server (Docker Compose behind nginx)</text>
+            <rect x="330" y="44" width="270" height="214" rx="10" class="d-box d-box--api"/>
+            <text x="350" y="78" class="d-title">Express API on Node.js</text>
+            <text x="350" y="104" class="d-sub">24 route modules</text>
+            <text x="350" y="124" class="d-sub">Auth (JWT), bookings, contracts</text>
+            <text x="350" y="144" class="d-sub">Sessions, faces, stories, messages</text>
+            <text x="350" y="164" class="d-sub">Moderation, reports, support, AI</text>
+            <text x="350" y="194" class="d-sub">Zod validation, Multer uploads</text>
+            <text x="350" y="214" class="d-sub">Socket.io for live updates</text>
+            <text x="350" y="234" class="d-sub">Scheduled cleanup service</text>
+
+            <rect x="330" y="300" width="270" height="76" rx="10" class="d-box"/>
+            <text x="350" y="332" class="d-title">MongoDB</text>
+            <text x="350" y="354" class="d-sub">22 Mongoose models</text>
+
+            <text x="690" y="28" class="d-group">Managed services</text>
+            <rect x="690" y="44" width="250" height="54" rx="10" class="d-box d-box--ext"/>
+            <text x="708" y="68" class="d-title">AWS S3</text><text x="708" y="86" class="d-sub">Live-session photos, signed URLs</text>
+            <rect x="690" y="108" width="250" height="54" rx="10" class="d-box d-box--ext"/>
+            <text x="708" y="132" class="d-title">AWS Rekognition</text><text x="708" y="150" class="d-sub">Index faces, search by selfie</text>
+            <rect x="690" y="172" width="250" height="54" rx="10" class="d-box d-box--ext"/>
+            <text x="708" y="196" class="d-title">Cloudinary</text><text x="708" y="214" class="d-sub">Posts, stories, avatars, chat media</text>
+            <rect x="690" y="236" width="250" height="54" rx="10" class="d-box d-box--ext"/>
+            <text x="708" y="260" class="d-title">Replicate</text><text x="708" y="278" class="d-sub">LLM chat and image generation</text>
+            <rect x="690" y="300" width="250" height="54" rx="10" class="d-box d-box--ext"/>
+            <text x="708" y="324" class="d-title">Email (Nodemailer)</text><text x="708" y="342" class="d-sub">Verification and reset codes</text>
+
+            <path d="M240 82 H330" class="d-line" marker-end="url(#arr)"/>
+            <path d="M240 112 C290 112 290 214 330 214" class="d-line d-line--live" marker-start="url(#arr)" marker-end="url(#arr)"/>
+            <path d="M240 212 H330" class="d-line" marker-end="url(#arr)"/>
+            <path d="M465 258 V300" class="d-line" marker-end="url(#arr)"/>
+            <path d="M600 71 H690" class="d-line" marker-end="url(#arr)"/>
+            <path d="M600 110 C650 110 650 135 690 135" class="d-line" marker-end="url(#arr)"/>
+            <path d="M600 150 C650 150 650 199 690 199" class="d-line" marker-end="url(#arr)"/>
+            <path d="M600 190 C650 190 650 263 690 263" class="d-line" marker-end="url(#arr)"/>
+            <path d="M600 230 C650 230 650 327 690 327" class="d-line" marker-end="url(#arr)"/>
+
+            <path d="M20 408 h28" class="d-line"/><text x="56" y="412" class="d-sub">REST over HTTPS</text>
+            <path d="M190 408 h28" class="d-line d-line--live"/><text x="226" y="412" class="d-sub">Socket.io (real time)</text>
+          </svg>
+          <figcaption>Drawn from the repository: package manifests, route registration in app.js, and docker-compose.yml.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-features">
+    <div class="wrap cs-grid">
+      <h2 id="cs-features">Main features</h2>
+      <div class="cs-body">
+        <ul class="feature-list">
+          <li><svg aria-hidden="true"><use href="#i-user"/></svg><div><strong>Profiles and portfolios</strong><span>Publications with photos and video, reels, 24-hour stories, followers, ratings and reviews.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-image"/></svg><div><strong>Discovery and job requests</strong><span>Search creatives by type, governorate and minimum rating, browse them on a map, or post a job request with a budget and let creatives respond.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-cal"/></svg><div><strong>Booking and negotiation</strong><span>Clients send a request with the event, date, location and amount. The provider can confirm, negotiate new terms or reject; a calendar shows what's coming up.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-sign"/></svg><div><strong>Signed contracts</strong><span>Client and provider each sign on screen. The API renders both signatures, names and signing dates into a PDF contract.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-live"/></svg><div><strong>Live sessions</strong><span>The photographer opens a time-limited session with an access code; guests join, see photos arrive in real time, and the media is deleted automatically after the session.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-chat"/></svg><div><strong>Messaging and support</strong><span>Direct chat with media, notifications, and a customer-service conversation with the admin team.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-shield"/></svg><div><strong>Moderation</strong><span>Reports, warnings and time-limited bans, with bans lifted automatically by a cleanup job.</span></div></li>
+          <li><svg aria-hidden="true"><use href="#i-dash"/></svg><div><strong>Admin dashboard</strong><span>Users, bookings, posts, media, reports, support, statistics and the AI configuration in one web app.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-ai">
+    <div class="wrap cs-grid">
+      <h2 id="cs-ai">AI features</h2>
+      <div class="cs-body" style="max-width:none">
+        <p>Each AI feature answers a specific need in the product, not a demo for its own sake.</p>
+        <div class="ai-cards">
+          <article class="ai-card" data-glow>
+            <h3>EL Mousawer</h3>
+            <p class="ai-card__how">LLM assistant via Replicate, streamed</p>
+            <p>A friendly photography mentor inside the app. It answers questions about cameras, light and editing in a warm, conversational voice, and replies stream word by word so the chat feels immediate.</p>
+          </article>
+          <article class="ai-card" data-glow>
+            <h3>Sawarny Studio</h3>
+            <p class="ai-card__how">Image generation via Replicate</p>
+            <p>Generates and edits images from a text prompt and optional reference photos, directly inside the app.</p>
+          </article>
+          <article class="ai-card" data-glow>
+            <h3>Find-Me</h3>
+            <p class="ai-card__how">AWS Rekognition face search</p>
+            <p>Photos uploaded to a live session are indexed. A guest takes a selfie and gets back only the photos from that session they appear in, after giving explicit consent.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-real">
+    <div class="wrap cs-grid">
+      <h2 id="cs-real">Realisation</h2>
+      <div class="cs-body" style="max-width:none">
+        <p>Screens from the working app, captured on a phone during testing in 2026. Select any screen to see it larger.</p>
+        <div class="shots">
+          <div class="shots__group">
+            <h3>Discover</h3>
+            <p>Clients browse what creatives publish, post job requests, and filter studios by type, region and rating.</p>
+            <ul class="shots__row">
+              <li><figure class="shot"><button type="button" data-shot="Launch screen: Sawarny's branded start screen." aria-label="Enlarge screenshot: Launch screen"><div class="phone"><img src="/assets/img/sawarny/01-splash.jpg" alt="Sawarny app, launch screen screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Launch screen</strong>Sawarny's branded start screen.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Job requests feed: Clients post a job with location and budget; creatives tap Interested." aria-label="Enlarge screenshot: Job requests feed"><div class="phone"><img src="/assets/img/sawarny/02-feed-requests.jpg" alt="Sawarny app, job requests feed screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Job requests feed</strong>Clients post a job with location and budget; creatives tap Interested.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Find a studio: Filter by studio, photographer, videographer or hybrid, then by governorate and minimum rating." aria-label="Enlarge screenshot: Find a studio"><div class="phone"><img src="/assets/img/sawarny/03-search-studios.jpg" alt="Sawarny app, find a studio screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Find a studio</strong>Filter by studio, photographer, videographer or hybrid, then by governorate and minimum rating.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Map of creatives: Every professional placed on a map of Tunisia." aria-label="Enlarge screenshot: Map of creatives"><div class="phone"><img src="/assets/img/sawarny/04-map.jpg" alt="Sawarny app, map of creatives screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Map of creatives</strong>Every professional placed on a map of Tunisia.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Creative profile: Rating, role, followers and a portfolio of publications." aria-label="Enlarge screenshot: Creative profile"><div class="phone"><img src="/assets/img/sawarny/05-profile.jpg" alt="Sawarny app, creative profile screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Creative profile</strong>Rating, role, followers and a portfolio of publications.</figcaption></figure></li>
+            </ul>
+          </div>
+          <div class="shots__group">
+            <h3>Book and negotiate</h3>
+            <p>A booking is a small structured agreement: what, when, where and for how much, which the provider can accept, counter or refuse.</p>
+            <ul class="shots__row">
+              <li><figure class="shot"><button type="button" data-shot="New booking: Step-by-step request with description, date, place and amount." aria-label="Enlarge screenshot: New booking"><div class="phone"><img src="/assets/img/sawarny/06-new-booking.jpg" alt="Sawarny app, new booking screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>New booking</strong>Step-by-step request with description, date, place and amount.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Confirm, negotiate or reject: The provider answers a pending request in one tap." aria-label="Enlarge screenshot: Confirm, negotiate or reject"><div class="phone"><img src="/assets/img/sawarny/07-booking-details.jpg" alt="Sawarny app, confirm, negotiate or reject screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Confirm, negotiate or reject</strong>The provider answers a pending request in one tap.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Bookings dashboard: Tabs for bookings, sessions, live events and finished jobs." aria-label="Enlarge screenshot: Bookings dashboard"><div class="phone"><img src="/assets/img/sawarny/08-bookings.jpg" alt="Sawarny app, bookings dashboard screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Bookings dashboard</strong>Tabs for bookings, sessions, live events and finished jobs.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Notifications: Booking updates, promotions and moderation history in one place." aria-label="Enlarge screenshot: Notifications"><div class="phone"><img src="/assets/img/sawarny/09-notifications.jpg" alt="Sawarny app, notifications screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Notifications</strong>Booking updates, promotions and moderation history in one place.</figcaption></figure></li>
+            </ul>
+          </div>
+          <div class="shots__group">
+            <h3>Live session and Find-Me</h3>
+            <p>On the day, the photographer opens a session with an access code. Photos appear as they're shot, and each guest can find their own with a selfie.</p>
+            <ul class="shots__row">
+              <li><figure class="shot"><button type="button" data-shot="Live session: Access code, connected guests and the photo stream as it's uploaded." aria-label="Enlarge screenshot: Live session"><div class="phone"><img src="/assets/img/sawarny/10-live-session.jpg" alt="Sawarny app, live session screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Live session</strong>Access code, connected guests and the photo stream as it's uploaded.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Find-Me result: After a selfie, the guest sees only the photos they appear in." aria-label="Enlarge screenshot: Find-Me result"><div class="phone"><img src="/assets/img/sawarny/11-find-me.jpg" alt="Sawarny app, find-me result screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Find-Me result</strong>After a selfie, the guest sees only the photos they appear in.</figcaption></figure></li>
+            </ul>
+          </div>
+          <div class="shots__group">
+            <h3>AI assistant</h3>
+            <p>Two modes in one chat: EL Mousawer answers photography questions, Sawarny Studio generates images.</p>
+            <ul class="shots__row">
+              <li><figure class="shot"><button type="button" data-shot="EL Mousawer: A photography and technology mentor you can ask anything." aria-label="Enlarge screenshot: EL Mousawer"><div class="phone"><img src="/assets/img/sawarny/12-el-mousawer.jpg" alt="Sawarny app, el mousawer screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>EL Mousawer</strong>A photography and technology mentor you can ask anything.</figcaption></figure></li>
+              <li><figure class="shot"><button type="button" data-shot="Sawarny Studio: Image generation from a prompt or your own photos, one to four results at a time." aria-label="Enlarge screenshot: Sawarny Studio"><div class="phone"><img src="/assets/img/sawarny/13-sawarny-studio.jpg" alt="Sawarny app, sawarny studio screen" loading="lazy" width="540" height="1200"></div></button><figcaption><strong>Sawarny Studio</strong>Image generation from a prompt or your own photos, one to four results at a time.</figcaption></figure></li>
+            </ul>
+          </div>
+        </div>
+        <p class="shots__note">Guests' faces in the live-session screens are blurred, and a third party's phone number is hidden.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-design">
+    <div class="wrap cs-grid">
+      <h2 id="cs-design">Design decisions</h2>
+      <div class="cs-body">
+        <p><strong>Ask before matching faces.</strong> Joining a live session shows a consent screen explaining that photos will be analysed to find the guest. Consent can be withdrawn later from profile settings.</p>
+        <p><strong>Different sign-up paths for different people.</strong> Clients, individual creatives and studios register through separate flows, so a studio is presented by its business name and a photographer by their own.</p>
+        <p><strong>Small uploads from the phone.</strong> Images are resized and compressed on the device before upload, which keeps posting, chat and profile updates quick.</p>
+        <p><strong>AI settings without redeploying.</strong> Admins can change the AI model and API keys from the dashboard. Without a key, the AI features fall back to a mock response, so development never blocks on paid services.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-challenges">
+    <div class="wrap cs-grid">
+      <h2 id="cs-challenges">Engineering challenges</h2>
+      <div class="cs-body">
+        <ul class="challenges">
+          <li>
+            <h3>Giving each guest only their photos</h3>
+            <p><b>Challenge:</b> hundreds of event photos, and a guest should only ever see the ones they're in.</p>
+            <p><b>Solution:</b> every uploaded photo is indexed into a Rekognition collection and the resulting face IDs are stored against the photo. A selfie search returns matching face IDs, which are mapped back to photos and filtered to the guest's session. The app only receives short-lived signed S3 links.</p>
+          </li>
+          <li>
+            <h3>Not keeping event photos forever</h3>
+            <p><b>Challenge:</b> live-session media is personal and shouldn't outlive its purpose.</p>
+            <p><b>Solution:</b> sessions carry a duration and an expiry date. A cleanup service ends expired sessions, then after a configurable number of days deletes the S3 objects, the faces in the Rekognition collection and the database records, and tells connected phones over Socket.io that the session is gone.</p>
+          </li>
+          <li>
+            <h3>Contracts both sides can rely on</h3>
+            <p><b>Challenge:</b> an agreement made in chat is easy to dispute later.</p>
+            <p><b>Solution:</b> each party draws a signature on screen. Both are stored with the time they were signed and rendered with PDFKit into a contract that includes the booking terms.</p>
+          </li>
+          <li>
+            <h3>An assistant that feels responsive</h3>
+            <p><b>Challenge:</b> large language models can take several seconds to finish an answer.</p>
+            <p><b>Solution:</b> the API streams the reply as server-sent events and the app renders it as it arrives, through a dedicated streaming hook.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="cs-status">
+    <div class="wrap cs-grid">
+      <h2 id="cs-status">Status</h2>
+      <div class="cs-body">
+        <p>Built in 2025–2026 as my graduation project and running on real phones, as the screens above show. The full source for the mobile app, API and admin dashboard is on GitHub. There's no public demo at the moment.</p>
+        <div class="flagship__actions">
+          <a class="btn btn--primary" href="https://github.com/Ihebcanados/sawarny" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-github"/></svg>View the code on GitHub</a>
+          <a class="btn" href="/#contact">Ask me about it</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer">
+    <div>
+      <div class="footer__name">Iheb Ichi</div>
+      <p style="margin:.35rem 0 0">Software engineer and creative technologist, Mahdia, Tunisia.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#work">Projects</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a href="https://github.com/Ihebcanados" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="mailto:iheb6410@gmail.com">iheb6410@gmail.com</a></li>
+      </ul>
+    </nav>
+    <p style="margin:0">© <span data-year>2026</span> Iheb Ichi</p>
+  </div>
+</footer>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot" hidden>
+  <img src="" alt="">
+  <button class="lightbox__close" type="button" aria-label="Close screenshot"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+  <p class="lightbox__cap"></p>
+</div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>
